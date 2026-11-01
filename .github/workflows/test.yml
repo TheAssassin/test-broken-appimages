@@ -1,0 +1,16 @@
+name: Test
+
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Rebuild GIMP AppImage
+        run: |
+          wget https://github.com/ivan-hc/GIMP-appimage/releases/download/continuous-stable/GNU-Image-Manipulation-Program_3.2.6-2-archimage5.0-x86_64.AppImage
+          chmod +x *.AppImage
+          ./GNU*.AppImage --appimage-extract
+          env ARCH=x86_64 ./appimagetool*.AppImage squashfs-root/
